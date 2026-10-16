@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nebula Hands — Interactive WebGL Particle System & Hand Tracking</title>
+    <meta name="description" content="A real-time 3D particle swarm controlled by hand gestures using Three.js, GLSL signed distance field shaders, and Google MediaPipe AI hand tracking.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Modular Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Ambient background illumination -->
+    <div class="ambient-glow"></div>
+
+    <!-- WebGL Canvas Container -->
+    <div id="canvas-container"></div>
+
+    <!-- Webcam HUD Viewfinder -->
+    <aside class="webcam-panel" aria-label="Camera Tracking Viewfinder">
+        <div class="webcam-card">
+            <video id="video-input" autoplay muted playsinline></video>
+            <div class="webcam-status">
+                <div class="status-indicator">
+                    <div id="status-dot" class="status-dot"></div>
+                    <span id="status-text">Searching</span>
+                </div>
+                <span id="fps-counter" class="fps-counter">60 FPS</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Glassmorphic HUD Dashboard -->
+    <main id="ui" aria-label="HUD Controls and Telemetry">
+        <section class="hud-card">
+            <div class="header-group">
+                <div class="badge-row">
+                    <span class="tag-badge">WebGL 3D</span>
+                    <span class="tag-badge">MediaPipe AI</span>
+                </div>
+                <h1>Nebula Hands</h1>
+                <p class="subtitle">Gesture-Controlled Cosmic Particle Swarm</p>
+            </div>
+
+            <div class="shape-section">
+                <div class="section-label">Current Shape: <span id="shape-name" class="highlight">Orb</span></div>
+                <div class="shape-chips" role="group" aria-label="Shape Selection">
+                    <button type="button" class="shape-chip active" data-shape="Orb" title="Switch to Orb Shape">
+                        <span class="chip-icon">●</span> Orb
+                    </button>
+                    <button type="button" class="shape-chip" data-shape="Heart" title="Switch to Heart Shape">
+                        <span class="chip-icon">♥</span> Heart
+                    </button>
+                    <button type="button" class="shape-chip" data-shape="Flower" title="Switch to Flower Shape">
+                        <span class="chip-icon">✿</span> Flower
+                    </button>
+                    <button type="button" class="shape-chip" data-shape="Saturn" title="Switch to Saturn Shape">
+                        <span class="chip-icon">🪐</span> Saturn
+                    </button>
+                </div>
+            </div>
+
+            <div class="meter-group">
+                <div class="meter-header">
+                    <span>PINCH FORCE</span>
+                    <span>IMPLOSION TELEMETRY</span>
+                </div>
+                <div class="meter-track">
+                    <div id="pinch-meter" class="meter-fill"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gesture Guide Card -->
+        <section class="gesture-guide">
+            <div class="gesture-item">
+                <span class="gesture-name">OPEN HAND</span>
+                <span class="gesture-desc">Guide swarm & deflect particles</span>
+            </div>
+            <div class="gesture-item">
+                <span class="gesture-name">PINCH</span>
+                <span class="gesture-desc">Gravitational implosion toward fingers</span>
+            </div>
+            <div class="gesture-item">
+                <span class="gesture-name">RELEASE</span>
+                <span class="gesture-desc">Kinetic burst & shape mutation</span>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bottom Telemetry & Info Pill -->
+    <footer class="bottom-bar">
+        <div id="color-dot" class="color-dot"></div>
+        <span><strong>2,000</strong> Shaded Particles &middot; WebGL Shaders &middot; Mouse & Spacebar Backup Supported</span>
+    </footer>
+
+    <!-- Camera Permission / Info Modal -->
+    <div id="cam-notice" class="cam-notice">
+        <h2>Webcam Access Required</h2>
+        <p>Nebula Hands uses your webcam to track hand gestures via MediaPipe AI. Please grant camera permission in your browser, or enjoy controlling the swarm with your mouse and click/hold.</p>
+        <button id="close-notice" type="button">Got It, Let's Play</button>
+    </div>
+
+    <!-- External Libraries (Three.js & MediaPipe) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+
+    <!-- Modular Application Logic -->
+    <script src="script.js"></script>
+</body>
+</html>
